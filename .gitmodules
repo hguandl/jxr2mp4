@@ -1,0 +1,3 @@
+[submodule "jxrlib"]
+	path = jxrlib
+	url = https://github.com/hguandl/jxrlib.git
