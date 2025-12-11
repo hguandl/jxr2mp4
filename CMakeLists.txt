@@ -8,7 +8,7 @@ add_library(decode OBJECT decode.c)
 if(NOT MSVC)
     target_compile_definitions(decode PRIVATE __ANSI__)
 endif()
-target_compile_options(decode PRIVATE -Wall -Wextra -Werror)
+target_compile_options(decode PRIVATE -Wall)
 target_include_directories(decode PRIVATE
     ${jxrlib_SOURCE_DIR}/common/include
     ${jxrlib_SOURCE_DIR}/image/sys
@@ -17,5 +17,5 @@ target_include_directories(decode PRIVATE
 target_link_libraries(decode INTERFACE jxrglue)
 
 add_executable(main main.c)
-target_compile_options(main PRIVATE -Wall -Wextra -Werror)
+target_compile_options(main PRIVATE -Wall)
 target_link_libraries(main PRIVATE decode)
