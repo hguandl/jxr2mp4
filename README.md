@@ -8,3 +8,10 @@
 # On Windows
 winget install ffmpeg
 ```
+
+## Usage
+
+```
+# On Windows
+jxr2mp4.exe input.jxr output.mp4
+```
