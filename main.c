@@ -26,10 +26,22 @@ int main(int argc, const char *argv[]) {
 
   uint8_t *gbrap = NULL;
   int width, height;
+  size_t cbytes;
 
-  long ret = PixelPlanesFromFile(input_file, &gbrap, &width, &height);
+  long ret = PixelPlanesFromFile(input_file, &gbrap, &width, &height, &cbytes);
   if (ret < 0) {
-    fprintf(stderr, "Failed to read JXR file: %ld", ret);
+    fprintf(stderr, "Failed to read JXR file: %ld\n", ret);
+    return 1;
+  }
+
+  char *pix_fmt = NULL;
+  if (cbytes == sizeof(uint16_t)) {
+    pix_fmt = "gbrapf16le";
+  } else if (cbytes == sizeof(uint32_t)) {
+    pix_fmt = "gbrapf32le";
+  } else {
+    fprintf(stderr, "Unsupported channel size (%ld bytes)\n", cbytes);
+    free(gbrap);
     return 1;
   }
 
@@ -41,7 +53,7 @@ int main(int argc, const char *argv[]) {
   snprintf(cmd, cmdlen,
            "ffmpeg -hide_banner"
            " -f rawvideo"
-           " -pix_fmt gbrapf16le -color_trc linear"
+           " -pix_fmt %s -color_trc linear"
            " -video_size %dx%d"
            " -i -"
            " -vframes %d -r %d/%d"
@@ -52,7 +64,7 @@ int main(int argc, const char *argv[]) {
            " -tag:v hvc1"
            " -f mp4 -brand mp42"
            " -y %s",
-           width, height, frames, frames, seconds,
+           pix_fmt, width, height, frames, frames, seconds,
            "pin=709:p=2020:min=709:m=2020_ncl:tin=linear:t=smpte2084:npl=203",
            output_file);
 
@@ -72,7 +84,7 @@ int main(int argc, const char *argv[]) {
   size_t total = (size_t)width * (size_t)height;
 
   for (int i = 0; i < frames; ++i) {
-    size_t written = fwrite(gbrap, sizeof(uint64_t), total, pipe_fp);
+    size_t written = fwrite(gbrap, 4 * cbytes, total, pipe_fp);
 
     if (written < total) {
       fprintf(stderr, "Error writing frame %d. FFmpeg might have closed.\n", i);
