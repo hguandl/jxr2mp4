@@ -11,7 +11,9 @@ winget install ffmpeg
 
 ## Usage
 
+npl value is optional (default is 203)
+
 ```
 # On Windows
-jxr2mp4.exe input.jxr output.mp4
+jxr2mp4.exe input.jxr output.mp4 203
 ```

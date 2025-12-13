@@ -17,12 +17,13 @@
 
 int main(int argc, const char *argv[]) {
   if (argc < 3) {
-    fprintf(stderr, "Usage: %s <input.jxr> <output.mp4>\n", argv[0]);
+    fprintf(stderr, "Usage: %s <input.jxr> <output.mp4> [npl]\n", argv[0]);
     return 1;
   }
 
   const char *input_file = argv[1];
   const char *output_file = argv[2];
+  const unsigned npl = (argc >= 4) ? (unsigned int)atoi(argv[3]) : 203;
 
   uint8_t *gbrap = NULL;
   int width, height;
@@ -57,7 +58,7 @@ int main(int argc, const char *argv[]) {
            " -video_size %dx%d"
            " -i -"
            " -vframes %d -r %d/%d"
-           " -vf zscale=%s"
+           " -vf zscale=%s%u"
            " -pix_fmt yuv444p10le"
            " -c:v libx265"
            " -x265-params lossless=1"
@@ -65,7 +66,7 @@ int main(int argc, const char *argv[]) {
            " -f mp4 -brand mp42"
            " -y %s",
            pix_fmt, width, height, frames, frames, seconds,
-           "pin=709:p=2020:min=709:m=2020_ncl:tin=linear:t=smpte2084:npl=203",
+           "pin=709:p=2020:min=709:m=2020_ncl:tin=linear:t=smpte2084:npl=", npl,
            output_file);
 
 #ifndef _WIN32

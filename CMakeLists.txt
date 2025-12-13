@@ -16,6 +16,6 @@ target_include_directories(decode PRIVATE
 )
 target_link_libraries(decode INTERFACE jxrglue)
 
-add_executable(main main.c)
-target_compile_options(main PRIVATE -Wall)
-target_link_libraries(main PRIVATE decode)
+add_executable(jxr2mp4 main.c)
+target_compile_options(jxr2mp4 PRIVATE -Wall)
+target_link_libraries(jxr2mp4 PRIVATE decode)
