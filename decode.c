@@ -26,10 +26,10 @@ long PixelVectorFromFile(const char *file, uint8_t **rgba, int *width,
   } else {
     fprintf(stderr,
             "Unsupported Pixel format GUID"
-            " {%08x-%04x-%04x-%02x%02x%2x%2x%2x%2x%2x%2x}\n",
-            format.Data1, format.Data2, format.Data3, format.Data4[0],
-            format.Data4[1], format.Data4[2], format.Data4[3], format.Data4[4],
-            format.Data4[5], format.Data4[6], format.Data4[7]);
+            " {%08lx-%04x-%04x-%02x%02x%2x%2x%2x%2x%2x%2x}\n",
+            (unsigned long)format.Data1, format.Data2, format.Data3,
+            format.Data4[0], format.Data4[1], format.Data4[2], format.Data4[3],
+            format.Data4[4], format.Data4[5], format.Data4[6], format.Data4[7]);
     err = -1;
     goto Cleanup;
   }

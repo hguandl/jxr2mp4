@@ -41,7 +41,7 @@ int main(int argc, const char *argv[]) {
   } else if (cbytes == sizeof(uint32_t)) {
     pix_fmt = "gbrapf32le";
   } else {
-    fprintf(stderr, "Unsupported channel size (%ld bytes)\n", cbytes);
+    fprintf(stderr, "Unsupported channel size (%zd bytes)\n", cbytes);
     free(gbrap);
     return 1;
   }
