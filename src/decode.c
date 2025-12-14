@@ -54,8 +54,12 @@ Cleanup:
     buf = NULL;
   }
 
-  pDecoder->Release(&pDecoder);
-  pCodecFactory->Release(&pCodecFactory);
+  if (pDecoder) {
+    pDecoder->Release(&pDecoder);
+  }
+  if (pCodecFactory) {
+    pCodecFactory->Release(&pCodecFactory);
+  }
 
   *rgba = buf;
   return err;

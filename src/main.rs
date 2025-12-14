@@ -55,6 +55,7 @@ fn main() -> Result<()> {
         }
         (None, Some(directory)) => {
             let output_dir = args.output.as_deref().unwrap_or(directory.as_path());
+            std::fs::create_dir_all(&output_dir).context("Failed to create output directory")?;
             for entry in std::fs::read_dir(&directory).context("Failed to read directory")? {
                 let entry = entry.context("Failed to get directory entry")?;
                 let path = entry.path();
