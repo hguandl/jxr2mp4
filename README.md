@@ -23,6 +23,8 @@ $ brew install ffmpeg
 ```sh
 JXR to MP4 transcoder
 
+Convert HDR colors from linear to PQ.
+
 Usage: jxr2mp4 [OPTIONS] <-i <INPUT_FILE>|-d <INPUT_DIRECTORY>>
 
 Options:
