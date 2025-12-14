@@ -1,0 +1,24 @@
+# Max retries for failed conversions
+retry = 3
+# Duration for the output video in seconds
+seconds = 5
+# Display FFmpeg logging information
+verbose = true
+
+# Output video width (0 to keep original)
+out_w = 0
+# Output video height (0 to keep original)
+out_h = 0
+# Nominal peak luminance (0 to use default)
+npl = 0
+
+# Output pixel format
+pix_fmt = "yuv420p10le"
+# Codec name
+codec = "libx265"
+
+# Extra options for the codec
+extra_opts = [
+  "-x265-params",
+  "lossless=1"
+]

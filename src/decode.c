@@ -1,9 +1,11 @@
-#include "decode.h"
+#if !defined(__ANSI__) && !defined(_MSC_VER)
+#define __ANSI__
+#endif
 
 #include <JXRGlue.h>
 
-long PixelVectorFromFile(const char *file, uint8_t **rgba, int *width,
-                         int *height, size_t *cbytes) {
+static long PixelVectorFromFile(const char *file, uint8_t **rgba, int *width,
+                                int *height, size_t *cbytes) {
   ERR err = 0;
   uint8_t *buf = NULL;
 
@@ -30,7 +32,7 @@ long PixelVectorFromFile(const char *file, uint8_t **rgba, int *width,
             (unsigned long)format.Data1, format.Data2, format.Data3,
             format.Data4[0], format.Data4[1], format.Data4[2], format.Data4[3],
             format.Data4[4], format.Data4[5], format.Data4[6], format.Data4[7]);
-    err = -1;
+    err = *cbytes = -1;
     goto Cleanup;
   }
 
@@ -99,3 +101,5 @@ Cleanup:
   *gbrap = (uint8_t *)dst;
   return err;
 }
+
+void libc_free(uint8_t *ptr) { free(ptr); }

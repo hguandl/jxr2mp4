@@ -1,0 +1,3 @@
+-Ijxrlib/common/include
+-Ijxrlib/image/sys
+-Ijxrlib/jxrgluelib
