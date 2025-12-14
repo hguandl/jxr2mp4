@@ -45,8 +45,8 @@ struct CliInput {
 fn main() -> Result<()> {
     let args = Cli::parse();
 
-    let config = std::fs::read_to_string(&args.config)?;
-    let config = toml::from_str::<EncodeConfig>(&config)?;
+    let config = std::fs::read_to_string(&args.config).context("Failed to read config file")?;
+    let config = toml::from_str::<EncodeConfig>(&config).context("Failed to parse config")?;
 
     match (args.input.input_file, args.input.input_directory) {
         (Some(file), None) => {
@@ -55,8 +55,8 @@ fn main() -> Result<()> {
         }
         (None, Some(directory)) => {
             let output_dir = args.output.as_deref().unwrap_or(directory.as_path());
-            for entry in std::fs::read_dir(&directory)? {
-                let entry = entry?;
+            for entry in std::fs::read_dir(&directory).context("Failed to read directory")? {
+                let entry = entry.context("Failed to get directory entry")?;
                 let path = entry.path();
                 if path.extension().and_then(|s| s.to_str()) != Some("jxr") {
                     continue;
