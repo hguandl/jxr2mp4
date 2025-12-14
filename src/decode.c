@@ -1,5 +1,11 @@
+#include <stdint.h>
+
 #if !defined(__ANSI__) && !defined(_MSC_VER)
 #define __ANSI__
+#endif
+
+#if !defined(WIN32) && defined(_MSC_VER)
+#define WIN32
 #endif
 
 #include <JXRGlue.h>

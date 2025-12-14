@@ -43,6 +43,8 @@ fn main() {
         build.define("__ANSI__", None);
         build.flag("-Wno-error=implicit-function-declaration");
         println!("cargo:rustc-link-lib=m");
+    } else {
+        build.define("WIN32", None);
     }
 
     build.compile("decode");
